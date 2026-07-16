@@ -29,6 +29,12 @@ jobs:
       - name: Build Electron .exe
         run: pnpm --filter @workspace/electron-app run build
 
+      - name: Copy output to repo root
+        run: |
+          mkdir -p "${{ github.workspace }}\win-unpacked"
+          cp -R "${{ github.workspace }}\artifacts\electron-app\dist-exe\win-unpacked\*" "${{ github.workspace }}\win-unpacked\"
+          cp "${{ github.workspace }}\artifacts\electron-app\dist-exe\TaTeTi-IA-Portable.exe" "${{ github.workspace }}\TaTeTi-IA-Portable.exe"
+
       - name: Upload Windows artifacts
         uses: actions/upload-artifact@v4
         with:
@@ -36,3 +42,5 @@ jobs:
           path: |
             artifacts/electron-app/dist-exe/**
             artifacts/electron-app/dist-exe/win-unpacked/**
+            win-unpacked/**
+            TaTeTi-IA-Portable.exe
