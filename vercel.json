@@ -1,0 +1,9 @@
+{
+  "buildCommand": "pnpm --filter @workspace/tictactoe-ai run build:vercel",
+  "outputDirectory": "artifacts/tictactoe-ai/dist-vercel",
+  "installCommand": "pnpm install",
+  "framework": null,
+  "rewrites": [
+    { "source": "/(.*)", "destination": "/index.html" }
+  ]
+}

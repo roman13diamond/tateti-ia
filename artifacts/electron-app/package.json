@@ -1,0 +1,43 @@
+{
+  "name": "@workspace/electron-app",
+  "version": "1.0.0",
+  "description": "Ta-Te-Ti IA — App de escritorio",
+  "private": true,
+  "main": "main.js",
+  "scripts": {
+    "build:web": "vite build --config ../tictactoe-ai/vite.electron.config.ts --outDir web",
+    "build": "pnpm run build:web && electron-builder --win portable",
+    "start": "pnpm run build:web && electron ."
+  },
+  "build": {
+    "appId": "com.roman13diamond1.tateti",
+    "productName": "Ta-Te-Ti IA",
+    "directories": {
+      "output": "dist-exe"
+    },
+    "files": [
+      "main.js",
+      "web/**/*"
+    ],
+    "win": {
+      "target": [
+        {
+          "target": "portable",
+          "arch": [
+            "x64"
+          ]
+        }
+      ],
+      "sign": false,
+      "signingHashAlgorithms": null
+    },
+    "portable": {
+      "artifactName": "TaTeTi-IA-Portable.exe"
+    }
+  },
+  "devDependencies": {
+    "electron": "^35.0.0",
+    "electron-builder": "^25.0.0",
+    "electron-packager": "^17.1.2"
+  }
+}
