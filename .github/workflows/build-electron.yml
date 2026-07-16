@@ -31,9 +31,10 @@ jobs:
 
       - name: Copy output to repo root
         run: |
-          mkdir -p "${{ github.workspace }}\win-unpacked"
-          cp -R "${{ github.workspace }}\artifacts\electron-app\dist-exe\win-unpacked\*" "${{ github.workspace }}\win-unpacked\"
-          cp "${{ github.workspace }}\artifacts\electron-app\dist-exe\TaTeTi-IA-Portable.exe" "${{ github.workspace }}\TaTeTi-IA-Portable.exe"
+          New-Item -ItemType Directory -Path "$env:GITHUB_WORKSPACE\win-unpacked" -Force | Out-Null
+          Copy-Item -Path "$env:GITHUB_WORKSPACE\artifacts\electron-app\dist-exe\win-unpacked\*" -Destination "$env:GITHUB_WORKSPACE\win-unpacked" -Recurse -Force
+          Copy-Item -Path "$env:GITHUB_WORKSPACE\artifacts\electron-app\dist-exe\TaTeTi-IA-Portable.exe" -Destination "$env:GITHUB_WORKSPACE\TaTeTi-IA-Portable.exe" -Force
+          Compress-Archive -Path "$env:GITHUB_WORKSPACE\TaTeTi-IA-Portable.exe","$env:GITHUB_WORKSPACE\win-unpacked\*" -DestinationPath "$env:GITHUB_WORKSPACE\TaTeTi-IA-windows.zip" -Force
 
       - name: Upload Windows artifacts
         uses: actions/upload-artifact@v4
@@ -44,3 +45,4 @@ jobs:
             artifacts/electron-app/dist-exe/win-unpacked/**
             win-unpacked/**
             TaTeTi-IA-Portable.exe
+            TaTeTi-IA-windows.zip
